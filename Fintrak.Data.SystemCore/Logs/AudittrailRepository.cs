@@ -1,20 +1,16 @@
-﻿using Fintrak.Data.Interface;
-using Fintrak.Data.SystemCore.Interface;
+﻿using Fintrak.Data.SystemCore.Interface;
 using Fintrak.Model.SystemCore;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.Composition;
 
 namespace Fintrak.Data.SystemCore
 {
-    [Export(typeof(IRoleRepository))]
+    [Export(typeof(IAudittrailRepository))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class AudittrailRepository : DataRepositoryBase<AuditLog>, IAudittrailRepository
     {
-        private readonly SystemCoreDbContext _context;
-
         public AudittrailRepository(SystemCoreDbContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task LogAuditAsync(AuditLog entity)

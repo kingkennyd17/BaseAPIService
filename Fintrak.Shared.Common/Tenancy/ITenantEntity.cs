@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fintrak.Model.SystemCore.Tenancy
+namespace Fintrak.Shared.Common.Tenancy
 {
     public interface ITenantEntity
     {

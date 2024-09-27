@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fintrak.Model.SystemCore.Tenancy
+namespace Fintrak.Shared.Common.Tenancy
 {
     public class TenantContext
     {

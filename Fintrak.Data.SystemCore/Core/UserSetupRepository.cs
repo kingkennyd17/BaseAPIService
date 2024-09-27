@@ -1,16 +1,10 @@
-﻿using Fintrak.Data.Interface;
-using Fintrak.Data.SystemCore.Interface;
+﻿using Fintrak.Data.SystemCore.Interface;
 using Fintrak.Model.SystemCore;
 using Fintrak.Model.SystemCore.Common;
-using Fintrak.Model.SystemCore.Tenancy;
 using Fintrak.Shared.Common.Base;
+using Fintrak.Shared.Common.Tenancy;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fintrak.Data.SystemCore
 {

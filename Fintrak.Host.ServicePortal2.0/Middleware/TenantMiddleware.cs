@@ -1,4 +1,4 @@
-﻿using Fintrak.Model.SystemCore.Tenancy;
+﻿using Fintrak.Shared.Common.Tenancy;
 using System.Security.Claims;
 
 namespace Fintrak.Host.ServicePortal2._0.Middleware

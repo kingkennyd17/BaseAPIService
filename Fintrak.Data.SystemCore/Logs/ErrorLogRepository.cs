@@ -1,5 +1,4 @@
-﻿using Fintrak.Data.Interface;
-using Fintrak.Data.SystemCore.Interface;
+﻿using Fintrak.Data.SystemCore.Interface;
 using Fintrak.Model.SystemCore;
 using Fintrak.Shared.Common.Base;
 using Fintrak.Shared.Common.Interface;
@@ -14,15 +13,12 @@ using System.Threading.Tasks;
 
 namespace Fintrak.Data.SystemCore
 {
-    [Export(typeof(IRoleRepository))]
+    [Export(typeof(IErrorLogRepository))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class ErrorLogRepository : DataRepositoryBase<ErrorLogs>, IErrorLogRepository
     {
-        private readonly SystemCoreDbContext _context;
-
         public ErrorLogRepository(SystemCoreDbContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task LogErrorAsync(ErrorLogs errorLog)
