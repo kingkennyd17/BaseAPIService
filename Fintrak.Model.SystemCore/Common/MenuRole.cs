@@ -1,7 +1,7 @@
 ﻿using Fintrak.Model.SystemCore.Common;
-using Fintrak.Model.SystemCore.Tenancy;
 using Fintrak.Shared.Common;
 using Fintrak.Shared.Common.Interface;
+using Fintrak.Shared.Common.Tenancy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fintrak.Data.Interface
+namespace Fintrak.Data.SystemCore.Interface
 {
     public interface IErrorLogRepository : IDataRepository<ErrorLogs>
     {

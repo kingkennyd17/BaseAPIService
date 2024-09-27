@@ -1,5 +1,5 @@
 ﻿using Fintrak.Model.SystemCore.Enum;
-using Fintrak.Model.SystemCore.Tenancy;
+using Fintrak.Shared.Common.Tenancy;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using System;

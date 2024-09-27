@@ -1,5 +1,4 @@
-﻿using Fintrak.Data.Interface;
-using Fintrak.Data.SystemCore.Interface;
+﻿using Fintrak.Data.SystemCore.Interface;
 using Fintrak.Model.SystemCore;
 using Fintrak.Model.SystemCore.Common;
 using Fintrak.Shared.Common.Base;

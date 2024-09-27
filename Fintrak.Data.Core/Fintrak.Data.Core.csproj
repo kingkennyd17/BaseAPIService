@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AuditManager\AuditManager.csproj" />
+    <ProjectReference Include="..\Fintrak.Data.Core.Interface\Fintrak.Data.Core.Interface.csproj" />
+    <ProjectReference Include="..\Fintrak.Model.Core\Fintrak.Model.Core.csproj" />
+    <ProjectReference Include="..\Fintrak.Model.SystemCore\Fintrak.Model.SystemCore.csproj" />
+  </ItemGroup>
+
+</Project>

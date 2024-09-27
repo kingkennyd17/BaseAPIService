@@ -1,5 +1,4 @@
-﻿using Fintrak.Data.Interface;
-using Fintrak.Data.SystemCore.Interface;
+﻿using Fintrak.Data.SystemCore.Interface;
 using Fintrak.Model.SystemCore;
 using Fintrak.Model.SystemCore.Common;
 using Microsoft.AspNetCore.Identity;
@@ -9,10 +8,8 @@ namespace Fintrak.Data.SystemCore
 {
     public class MenuRepository : DataRepositoryBase<Menu>, IMenuRepository
     {
-        private readonly SystemCoreDbContext _context;
         public MenuRepository(SystemCoreDbContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<IEnumerable<MenuInfo>> GetMenuInfoByLoginID(string loginID)

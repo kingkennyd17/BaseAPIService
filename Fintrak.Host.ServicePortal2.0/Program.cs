@@ -1,4 +1,3 @@
-using Fintrak.Data.Interface;
 using Fintrak.Data.SystemCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
@@ -20,7 +19,7 @@ using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using Fintrak.Shared.Common.Helper;
 using Fintrak.Host.ServicePortal2._0;
-using Fintrak.Model.SystemCore.Tenancy;
+using Fintrak.Shared.Common.Tenancy;
 
 var builder = WebApplication.CreateBuilder(args);
 

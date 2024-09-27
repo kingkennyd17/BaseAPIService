@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using static Fintrak.Shared.Common.CustomErrorTypes;
-using Fintrak.Data.Interface;
 using Fintrak.Model.SystemCore;
 using Fintrak.Service.SystemCore.Interface;
 using Fintrak.Shared.Common.Helper;

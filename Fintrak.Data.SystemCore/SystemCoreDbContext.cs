@@ -1,8 +1,9 @@
-﻿using Fintrak.Model.SystemCore;
+﻿using AuditManager.AuditInterface;
+using Fintrak.Model.SystemCore;
 using Fintrak.Model.SystemCore.Common;
-using Fintrak.Model.SystemCore.Tenancy;
 using Fintrak.Shared.Common;
 using Fintrak.Shared.Common.Helper;
+using Fintrak.Shared.Common.Tenancy;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -21,12 +22,14 @@ namespace Fintrak.Data.SystemCore
     {
         //private readonly UserContextService _userContextService;
         private readonly ITenantProvider _tenantProvider;
+        private readonly IAuditInterface _auditInterface;
         public SystemCoreDbContext(DbContextOptions<SystemCoreDbContext> options, UserContextService userContextService,
-                                ITenantProvider tenantProvider)
+                                ITenantProvider tenantProvider, IAuditInterface auditInterface)
         : base(options)
         {
             //_userContextService = userContextService;
             _tenantProvider = tenantProvider;
+            _auditInterface = auditInterface;
         }
 
         private bool _isAuditDisabled;
@@ -49,6 +52,7 @@ namespace Fintrak.Data.SystemCore
         public DbSet<Menu> MenuSet { get; set; }
         public DbSet<MenuRole> MenuRoleSet { get; set; }
         public DbSet<Module> ModuleSet { get; set; }
+        public DbSet<Solution> SolutionSet { get; set; }
         public DbSet<UserRole> UserRoleSet { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -80,6 +84,10 @@ namespace Fintrak.Data.SystemCore
             modelBuilder.Entity<Module>().Property(c => c.RowVersion).IsRowVersion();
             modelBuilder.Entity<Module>().ToTable("cor_module");
 
+            modelBuilder.Entity<Solution>().Ignore(e => e.EntityId).HasKey(e => e.SolutionId);
+            modelBuilder.Entity<Solution>().Property(c => c.RowVersion).IsRowVersion();
+            modelBuilder.Entity<Solution>().ToTable("cor_solution");
+
             //modelBuilder.Entity<UserSetup>().HasQueryFilter(e => e.TenantId == _tenantProvider.TenantId);
             modelBuilder.Entity<UserSetup>().HasMany(u => u.UserRoles).WithOne(ur => ur.User).HasForeignKey(ur => ur.UserId);
             modelBuilder.Entity<UserSetup>().Ignore(e => e.EntityId).HasKey(e => e.Id);
@@ -98,7 +106,7 @@ namespace Fintrak.Data.SystemCore
         {
             if (!_isAuditDisabled)
             {
-                OnBeforeSave();
+                AddAudit();
                 SetTenantId();
             }
             if (!string.IsNullOrEmpty(_tenantProvider.UserName))
@@ -111,7 +119,7 @@ namespace Fintrak.Data.SystemCore
         {
             if (!_isAuditDisabled)
             {
-                OnBeforeSave();
+                await AddAudit();
                 //SetTenantId();
             }
             if (!string.IsNullOrEmpty(_tenantProvider.UserName))
@@ -124,7 +132,8 @@ namespace Fintrak.Data.SystemCore
         {
             // Get entries that are being added or modified
             var entries = ChangeTracker.Entries<ITenantEntity>()
-                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted)
+                .ToList();
 
             foreach (var entry in entries)
             {
@@ -139,6 +148,10 @@ namespace Fintrak.Data.SystemCore
                     entry.Entity.UpdatedBy = _tenantProvider.UserName;
                     entry.Entity.UpdatedOn = DateTime.Now;
                 }
+                else if(entry.State == EntityState.Deleted)
+                {
+                    //Do nothing for now
+                }
                 else
                 {
                     //entry is modified
@@ -148,43 +161,12 @@ namespace Fintrak.Data.SystemCore
             }
         }
 
-        private void OnBeforeSave()
+        private async Task AddAudit()
         {
             var entries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted)
                 .ToList();
-
-            foreach (var entry in entries)
-            {
-                var auditLog = new AuditLog
-                {
-                    UserId = _tenantProvider.UserId,
-                    UserName = _tenantProvider.UserName,
-                    TableName = entry.Entity.GetType().Name,
-                    Timestamp = DateTime.UtcNow,
-                    IpAddress = _tenantProvider.IPAddress
-                };
-
-                if (entry.State == EntityState.Added)
-                {
-                    auditLog.Action = "Added";
-                    auditLog.NewValues = JsonConvert.SerializeObject(entry.CurrentValues.ToObject());
-                }
-                else if (entry.State == EntityState.Modified)
-                {
-                    auditLog.Action = "Modified";
-                    auditLog.OldValues = JsonConvert.SerializeObject(entry.OriginalValues.ToObject());
-                    auditLog.NewValues = JsonConvert.SerializeObject(entry.CurrentValues.ToObject());
-                    auditLog.AffectedColumns = string.Join(", ", entry.Properties.Where(p => p.IsModified).Select(p => p.Metadata.Name));
-                }
-                else if (entry.State == EntityState.Deleted)
-                {
-                    auditLog.Action = "Deleted";
-                    auditLog.OldValues = JsonConvert.SerializeObject(entry.OriginalValues.ToObject());
-                }
-
-                AuditLogSet.Add(auditLog);
-            }
+            await _auditInterface.AddAudit(entries);
         }
 
     }

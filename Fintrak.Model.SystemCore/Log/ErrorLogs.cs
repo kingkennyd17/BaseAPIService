@@ -1,13 +1,8 @@
-﻿using Fintrak.Model.SystemCore.Tenancy;
-using Fintrak.Shared.Common;
+﻿using Fintrak.Shared.Common;
 using Fintrak.Shared.Common.Interface;
-using System;
-using System.Collections.Generic;
+using Fintrak.Shared.Common.Tenancy;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fintrak.Model.SystemCore
 {
