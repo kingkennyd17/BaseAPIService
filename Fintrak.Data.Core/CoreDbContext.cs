@@ -21,6 +21,10 @@ namespace Fintrak.Data.Core
         public DbSet<ExtractionRole> ExtractionRoleSet { get; set; }
         public DbSet<ExtractionJob> ExtractionJobSet { get; set; }
         public DbSet<ExtractionTrigger> ExtractionTriggerSet { get; set; }
+        public DbSet<Processes> ProcessSet { get; set; }
+        public DbSet<ProcessRole> ProcessRoleSet { get; set; }
+        public DbSet<ProcessJob> ProcessJobSet { get; set; }
+        public DbSet<ProcessTrigger> ProcessTriggerSet { get; set; }
         public DbSet<SolutionRunDate> SolutionRunDateSet { get; set; }
         public DbSet<DefaultUser> DefaultUserSet { get; set; }
 
@@ -62,6 +66,30 @@ namespace Fintrak.Data.Core
             modelBuilder.Entity<DefaultUser>().Ignore(e => e.EntityId).HasKey(e => e.DefaultUserId);
             modelBuilder.Entity<DefaultUser>().Property(c => c.RowVersion).IsRowVersion();
             modelBuilder.Entity<DefaultUser>().ToTable("cor_defaultuser");
+
+            //Process
+            modelBuilder.Entity<Processes>().HasQueryFilter(e => e.TenantId == _tenantProvider.TenantId);
+            modelBuilder.Entity<Processes>().Ignore(e => e.EntityId).HasKey(e => e.ProcessId);
+            modelBuilder.Entity<Processes>().Property(c => c.RowVersion).IsRowVersion();
+            modelBuilder.Entity<Processes>().ToTable("cor_process");
+
+            //ProcessRole
+            modelBuilder.Entity<ProcessRole>().HasQueryFilter(e => e.TenantId == _tenantProvider.TenantId);
+            modelBuilder.Entity<ProcessRole>().Ignore(e => e.EntityId).HasKey(e => e.ProcessRoleId);
+            modelBuilder.Entity<ProcessRole>().Property(c => c.RowVersion).IsRowVersion();
+            modelBuilder.Entity<ProcessRole>().ToTable("cor_processrole");
+
+            //ProcessJob
+            modelBuilder.Entity<ProcessJob>().HasQueryFilter(e => e.TenantId == _tenantProvider.TenantId);
+            modelBuilder.Entity<ProcessJob>().Ignore(e => e.EntityId).HasKey(e => e.ProcessJobId);
+            modelBuilder.Entity<ProcessJob>().Property(c => c.RowVersion).IsRowVersion();
+            modelBuilder.Entity<ProcessJob>().ToTable("cor_processjob");
+
+            //ProcessTrigger
+            modelBuilder.Entity<ProcessTrigger>().HasQueryFilter(e => e.TenantId == _tenantProvider.TenantId);
+            modelBuilder.Entity<ProcessTrigger>().Ignore(e => e.EntityId).HasKey(e => e.ProcessTriggerId);
+            modelBuilder.Entity<ProcessTrigger>().Property(c => c.RowVersion).IsRowVersion();
+            modelBuilder.Entity<ProcessTrigger>().ToTable("cor_processtrigger");
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

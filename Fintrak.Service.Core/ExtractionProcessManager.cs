@@ -21,7 +21,7 @@ using Fintrak.Shared.Common.Data;
 
 namespace Fintrak.Service.Core
 {
-    public class ExtractionProcessManager : ManagerBase, ICoreManager
+    public class ExtractionProcessManager : ManagerBase, IExtractionProcessService
     {
         private readonly string _connectionString;
         private readonly IConfiguration _configuration;
