@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fintrak.Data.SystemCore\Fintrak.Data.SystemCore.csproj" />
+    <ProjectReference Include="..\Fintrak.Service.Core.Interface\Fintrak.Service.Core.Interface.csproj" />
     <ProjectReference Include="..\Fintrak.Service.SystemCore\Fintrak.Service.SystemCore.csproj" />
     <ProjectReference Include="..\Fintrak.Shared.Common\Fintrak.Shared.Common.csproj" />
   </ItemGroup>
